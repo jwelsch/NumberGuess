@@ -2,15 +2,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="using:NumberGuess"
+        xmlns:vm="clr-namespace:NumberGuess"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="NumberGuess.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
         Title="NumberGuess"
         Width="800"
         Height="600">
   <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-    <TextBox x:Name="_numberOne" IsReadOnly="True" />
-    <TextBox x:Name="_numberTwo" IsReadOnly="True" />
-    <TextBox x:Name="_numberThree" IsReadOnly="True" />
-    <TextBox x:Name="_numberFour" IsReadOnly="True" />
+    <controls:DigitInput x:Name="_oneDigitInput" FixedWidth="50" Digit="{Binding DigitOne}" />
+    <controls:DigitInput x:Name="_twoDigitInput" FixedWidth="50" Digit="{Binding DigitTwo}" />
+    <controls:DigitInput x:Name="_threeDigitInput" FixedWidth="50" Digit="{Binding DigitThree}" />
+    <controls:DigitInput x:Name="_fourDigitInput" FixedWidth="50" Digit="{Binding DigitFour}" />
   </StackPanel>
 </Window>

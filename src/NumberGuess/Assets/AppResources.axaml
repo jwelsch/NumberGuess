@@ -1,0 +1,15 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <ResourceDictionary.ThemeDictionaries>
+    <ResourceDictionary x:Key="Default">
+      <StaticResource x:Key="NumberGuessBackground" ResourceKey="SystemRegionBrush" />
+      <StaticResource x:Key="NumberGuessForeground" ResourceKey="SystemControlForegroundBaseHighBrush" />
+      <StaticResource x:Key="NumberGuessBorderMedium" ResourceKey="SystemControlForegroundBaseMediumBrush" />
+    </ResourceDictionary>
+    <ResourceDictionary x:Key="Dark">
+      <StaticResource x:Key="NumberGuessBackground" ResourceKey="SystemRegionBrush" />
+      <StaticResource x:Key="NumberGuessForeground" ResourceKey="SystemControlForegroundBaseHighBrush" />
+      <StaticResource x:Key="NumberGuessBorderMedium" ResourceKey="SystemControlForegroundBaseMediumBrush" />
+    </ResourceDictionary>
+  </ResourceDictionary.ThemeDictionaries>
+</ResourceDictionary>

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace NumberGuess.Common
+namespace NumberGuess.Common.DependencyInjection
 {
     public abstract class Module
     {

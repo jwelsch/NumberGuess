@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\NumberGuess\NumberGuess.csproj" />
+    <ProjectReference Include="..\NumberGuess.Testing\NumberGuess.Testing.csproj" />
   </ItemGroup>
 
   <ItemGroup>

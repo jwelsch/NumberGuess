@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using NumberGuess.Common;
+using NumberGuess.Common.DependencyInjection;
 
 namespace NumberGuess
 {
@@ -7,6 +7,7 @@ namespace NumberGuess
     {
         protected override void Load(IServiceCollection services, object[]? parameters = null)
         {
+            services.AddTransient<IAvaloniaKeyToCharConverter, AvaloniaKeyToCharConverter>();
         }
     }
 }

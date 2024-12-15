@@ -12,10 +12,12 @@
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.2.2" />
     <PackageReference Include="Avalonia.Desktop" Version="11.2.2" />
+    <PackageReference Include="Avalonia.Svg.Skia" Version="11.2.0.2" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.2" />
     <PackageReference Include="Avalonia.Fonts.Inter" Version="11.2.2" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.2.2" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
   </ItemGroup>
 
@@ -23,4 +25,22 @@
   <ItemGroup>
     <ProjectReference Include="..\NumberGuess.Common\NumberGuess.Common.csproj" />
   </ItemGroup>
+
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <AvaloniaXaml Remove="Assets\AppResources.axaml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <AvaloniaResource Update="Assets\AppResources.axaml">
+      <SubType>Designer</SubType>
+    </AvaloniaResource>
+  </ItemGroup>
+
 </Project>
