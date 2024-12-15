@@ -20,11 +20,9 @@ namespace NumberGuess
 
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                var avaloniaKeyToCharConverter = services.GetRequiredService<IAvaloniaKeyToCharConverter>();
-
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainWindowViewModel(avaloniaKeyToCharConverter)
+                    DataContext = services.GetRequiredService<MainWindowViewModel>()
                 };
             }
 

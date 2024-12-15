@@ -7,7 +7,10 @@ namespace NumberGuess
     {
         protected override void Load(IServiceCollection services, object[]? parameters = null)
         {
+            services.AddTransient<MainWindowViewModel>();
+
             services.AddTransient<IAvaloniaKeyToCharConverter, AvaloniaKeyToCharConverter>();
+            services.AddTransient<IDigitKeyDetector, DigitKeyDetector>();
         }
     }
 }

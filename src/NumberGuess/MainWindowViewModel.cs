@@ -1,18 +1,12 @@
 ﻿using Avalonia.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System.Linq;
 
 namespace NumberGuess
 {
     internal partial class MainWindowViewModel : ViewModelBase
     {
-        private readonly Key[] DigitKeys = new[]
-        {
-            Key.D0, Key.D1, Key.D2, Key.D3, Key.D4, Key.D5, Key.D6, Key.D7, Key.D8, Key.D9,
-            Key.NumPad0, Key.NumPad1, Key.NumPad2, Key.NumPad3, Key.NumPad4, Key.NumPad5, Key.NumPad6, Key.NumPad7, Key.NumPad8, Key.NumPad9
-        };
-
         private readonly IAvaloniaKeyToCharConverter _avaloniaKeyToCharConverter;
+        private readonly IDigitKeyDetector _digitKeyDetector;
 
         [ObservableProperty]
         private string? _digitOne;
@@ -26,14 +20,15 @@ namespace NumberGuess
         [ObservableProperty]
         private string? _digitFour;
 
-        public MainWindowViewModel(IAvaloniaKeyToCharConverter avaloniaKeyToCharConverter)
+        public MainWindowViewModel(IAvaloniaKeyToCharConverter avaloniaKeyToCharConverter, IDigitKeyDetector digitKeyDetector)
         {
             _avaloniaKeyToCharConverter = avaloniaKeyToCharConverter;
+            _digitKeyDetector = digitKeyDetector;
         }
 
         public bool ProcessKey(Key key)
         {
-            if (!DigitKeys.Contains(key))
+            if (!_digitKeyDetector.IsDigitKey(key))
             {
                 return false;
             }
