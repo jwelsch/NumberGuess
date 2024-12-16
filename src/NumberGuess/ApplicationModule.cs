@@ -11,6 +11,9 @@ namespace NumberGuess
 
             services.AddTransient<IAvaloniaKeyToCharConverter, AvaloniaKeyToCharConverter>();
             services.AddTransient<IDigitKeyDetector, DigitKeyDetector>();
+            services.AddTransient<IAttemptTracker, AttemptTracker>();
+            services.AddTransient<INumberGuessGameTrackerFactory, NumberGuessGameTrackerFactory>();
+            services.AddTransient<IAnswerGenerator, AnswerGenerator>();
         }
     }
 }

@@ -5,11 +5,13 @@
       <StaticResource x:Key="NumberGuessBackground" ResourceKey="SystemRegionBrush" />
       <StaticResource x:Key="NumberGuessForeground" ResourceKey="SystemControlForegroundBaseHighBrush" />
       <StaticResource x:Key="NumberGuessBorderMedium" ResourceKey="SystemControlForegroundBaseMediumBrush" />
+      <StaticResource x:Key="NumberGuessSelection" ResourceKey="SystemControlHighlightAccentBrush" />
     </ResourceDictionary>
     <ResourceDictionary x:Key="Dark">
       <StaticResource x:Key="NumberGuessBackground" ResourceKey="SystemRegionBrush" />
       <StaticResource x:Key="NumberGuessForeground" ResourceKey="SystemControlForegroundBaseHighBrush" />
       <StaticResource x:Key="NumberGuessBorderMedium" ResourceKey="SystemControlForegroundBaseMediumBrush" />
+      <StaticResource x:Key="NumberGuessSelection" ResourceKey="SystemControlHighlightAccentBrush" />
     </ResourceDictionary>
   </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

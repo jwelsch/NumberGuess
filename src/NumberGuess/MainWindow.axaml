@@ -3,6 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="using:NumberGuess"
+        xmlns:converters="using:NumberGuess"
         xmlns:vm="clr-namespace:NumberGuess"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="NumberGuess.MainWindow"
@@ -10,10 +11,29 @@
         Title="NumberGuess"
         Width="800"
         Height="600">
-  <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-    <controls:DigitInput x:Name="_oneDigitInput" FixedWidth="50" Digit="{Binding DigitOne}" />
-    <controls:DigitInput x:Name="_twoDigitInput" FixedWidth="50" Digit="{Binding DigitTwo}" />
-    <controls:DigitInput x:Name="_threeDigitInput" FixedWidth="50" Digit="{Binding DigitThree}" />
-    <controls:DigitInput x:Name="_fourDigitInput" FixedWidth="50" Digit="{Binding DigitFour}" />
-  </StackPanel>
+  <Window.Resources>
+    <converters:DigitPlaceHightlightConverter x:Key="DigitPlaceHightlightConverter"/>
+  </Window.Resources>
+  <DockPanel>
+    <DockPanel DockPanel.Dock="Bottom">
+      <Rectangle DockPanel.Dock="Top" Height="1" Fill="{DynamicResource NumberGuessBorderMedium}" Margin="0,0,0,5"/>
+      <Button x:Name="_statsButton" Margin="5,0,0,5" Command="{Binding ShowStatsCommand}">Stats</Button>
+      <Button x:Name="_resetButton" Margin="5,0,0,5" Command="{Binding ResetCommand}">Reset</Button>
+    </DockPanel>
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"  Orientation="Vertical">
+      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+        <controls:DigitInput x:Name="_oneDigitInput" FixedWidth="50" Digit="{Binding DigitOne}" HighlightBorder="{Binding DigitPlace, Converter={StaticResource DigitPlaceHightlightConverter}, ConverterParameter=0}" />
+        <controls:DigitInput x:Name="_twoDigitInput" FixedWidth="50" Digit="{Binding DigitTwo}" HighlightBorder="{Binding DigitPlace, Converter={StaticResource DigitPlaceHightlightConverter}, ConverterParameter=1}" />
+        <controls:DigitInput x:Name="_threeDigitInput" FixedWidth="50" Digit="{Binding DigitThree}" HighlightBorder="{Binding DigitPlace, Converter={StaticResource DigitPlaceHightlightConverter}, ConverterParameter=2}" />
+        <controls:DigitInput x:Name="_fourDigitInput" FixedWidth="50" Digit="{Binding DigitFour}" HighlightBorder="{Binding DigitPlace, Converter={StaticResource DigitPlaceHightlightConverter}, ConverterParameter=3}" />
+        <!--<controls:DigitInput x:Name="_oneDigitInput" FixedWidth="50" Digit="{Binding DigitOne}" />
+        <controls:DigitInput x:Name="_twoDigitInput" FixedWidth="50" Digit="{Binding DigitTwo}" />
+        <controls:DigitInput x:Name="_threeDigitInput" FixedWidth="50" Digit="{Binding DigitThree}" />
+        <controls:DigitInput x:Name="_fourDigitInput" FixedWidth="50" Digit="{Binding DigitFour}" />-->
+
+      </StackPanel>
+      <Button x:Name="_submitButton" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Width="290" Margin="0,5,0,0" Command="{Binding SubmitCommand}" IsEnabled="{Binding CanSubmit}" IsDefault="True">Submit</Button>
+      <TextBlock x:Name="_messageTextBlock" HorizontalAlignment="Center" Text="{Binding MessageText}" Margin="0,5,0,0" />
+    </StackPanel>
+  </DockPanel>
 </Window>
