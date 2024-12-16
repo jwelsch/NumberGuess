@@ -20,19 +20,14 @@
       <Button x:Name="_statsButton" Margin="5,0,0,5" Command="{Binding ShowStatsCommand}">Stats</Button>
       <Button x:Name="_resetButton" Margin="5,0,0,5" Command="{Binding ResetCommand}">Reset</Button>
     </DockPanel>
-    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"  Orientation="Vertical">
-      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-        <controls:DigitInput x:Name="_oneDigitInput" FixedWidth="50" Digit="{Binding DigitOne}" HighlightBorder="{Binding DigitPlace, Converter={StaticResource DigitPlaceHightlightConverter}, ConverterParameter=0}" />
-        <controls:DigitInput x:Name="_twoDigitInput" FixedWidth="50" Digit="{Binding DigitTwo}" HighlightBorder="{Binding DigitPlace, Converter={StaticResource DigitPlaceHightlightConverter}, ConverterParameter=1}" />
-        <controls:DigitInput x:Name="_threeDigitInput" FixedWidth="50" Digit="{Binding DigitThree}" HighlightBorder="{Binding DigitPlace, Converter={StaticResource DigitPlaceHightlightConverter}, ConverterParameter=2}" />
-        <controls:DigitInput x:Name="_fourDigitInput" FixedWidth="50" Digit="{Binding DigitFour}" HighlightBorder="{Binding DigitPlace, Converter={StaticResource DigitPlaceHightlightConverter}, ConverterParameter=3}" />
-        <!--<controls:DigitInput x:Name="_oneDigitInput" FixedWidth="50" Digit="{Binding DigitOne}" />
-        <controls:DigitInput x:Name="_twoDigitInput" FixedWidth="50" Digit="{Binding DigitTwo}" />
-        <controls:DigitInput x:Name="_threeDigitInput" FixedWidth="50" Digit="{Binding DigitThree}" />
-        <controls:DigitInput x:Name="_fourDigitInput" FixedWidth="50" Digit="{Binding DigitFour}" />-->
-
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom"  Orientation="Vertical">
+      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,0,5">
+        <controls:DigitControl x:Name="_oneDigitInput" FixedWidth="50" Digit="{Binding DigitOne}" HighlightBorder="{Binding DigitPlace, Converter={StaticResource DigitPlaceHightlightConverter}, ConverterParameter=0}" />
+        <controls:DigitControl x:Name="_twoDigitInput" FixedWidth="50" Digit="{Binding DigitTwo}" HighlightBorder="{Binding DigitPlace, Converter={StaticResource DigitPlaceHightlightConverter}, ConverterParameter=1}" />
+        <controls:DigitControl x:Name="_threeDigitInput" FixedWidth="50" Digit="{Binding DigitThree}" HighlightBorder="{Binding DigitPlace, Converter={StaticResource DigitPlaceHightlightConverter}, ConverterParameter=2}" />
+        <controls:DigitControl x:Name="_fourDigitInput" FixedWidth="50" Digit="{Binding DigitFour}" HighlightBorder="{Binding DigitPlace, Converter={StaticResource DigitPlaceHightlightConverter}, ConverterParameter=3}" />
       </StackPanel>
-      <Button x:Name="_submitButton" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Width="290" Margin="0,5,0,0" Command="{Binding SubmitCommand}" IsEnabled="{Binding CanSubmit}" IsDefault="True">Submit</Button>
+      <Button x:Name="_submitButton" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Width="290" Command="{Binding SubmitCommand}" IsEnabled="{Binding CanSubmit}" IsDefault="True">Submit</Button>
       <TextBlock x:Name="_messageTextBlock" HorizontalAlignment="Center" Text="{Binding MessageText}" Margin="0,5,0,0" />
     </StackPanel>
   </DockPanel>

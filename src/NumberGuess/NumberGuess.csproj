@@ -43,4 +43,11 @@
     </AvaloniaResource>
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Compile Update="DigitControl.axaml.cs">
+      <DependentUpon>DigitControl.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 </Project>

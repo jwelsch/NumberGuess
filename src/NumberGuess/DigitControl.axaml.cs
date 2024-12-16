@@ -26,13 +26,13 @@ public class BorderThicknessConverter : IValueConverter
     }
 }
 
-public class DigitInput : TemplatedControl
+public class DigitControl : TemplatedControl
 {
     /// <summary>
     /// Defines the <see cref="Digit"/> property.
     /// </summary>
     public static readonly StyledProperty<string?> DigitProperty =
-        AvaloniaProperty.Register<DigitInput, string?>(
+        AvaloniaProperty.Register<DigitControl, string?>(
             nameof(Digit));
 
     /// <summary>
@@ -48,7 +48,7 @@ public class DigitInput : TemplatedControl
     /// Defines the <see cref="FixedWidth"/> property.
     /// </summary>
     public static readonly StyledProperty<int> FixedWidthProperty =
-        AvaloniaProperty.Register<DigitInput, int>(
+        AvaloniaProperty.Register<DigitControl, int>(
             nameof(FixedWidth));
 
     /// <summary>
@@ -64,7 +64,7 @@ public class DigitInput : TemplatedControl
     /// Defines the <see cref="HighlightBorder"/> property.
     /// </summary>
     public static readonly StyledProperty<bool> HighlightBorderProperty =
-        AvaloniaProperty.Register<DigitInput, bool>(
+        AvaloniaProperty.Register<DigitControl, bool>(
             nameof(HighlightBorder));
 
     /// <summary>
@@ -80,7 +80,7 @@ public class DigitInput : TemplatedControl
     /// Defines the <see cref="BackgroundColor"/> property.
     /// </summary>
     public static readonly StyledProperty<Brush?> BackgroundColorProperty =
-        AvaloniaProperty.Register<DigitInput, Brush?>(
+        AvaloniaProperty.Register<DigitControl, Brush?>(
             nameof(BackgroundColor));
 
     /// <summary>

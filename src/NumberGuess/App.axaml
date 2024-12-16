@@ -7,6 +7,7 @@
   <Application.Styles>
     <FluentTheme />
     <StyleInclude Source="/Styles/AppStyles.axaml" />
-    <StyleInclude Source="/DigitInput.axaml" />
+    <StyleInclude Source="/DigitControl.axaml" />
+    <StyleInclude Source="/AttemptControl.axaml" />
   </Application.Styles>
 </Application>

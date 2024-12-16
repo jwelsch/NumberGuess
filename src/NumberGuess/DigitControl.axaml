@@ -3,10 +3,10 @@
         xmlns:controls="using:NumberGuess"
         xmlns:converters="using:NumberGuess">
   <Design.PreviewWith>
-    <controls:DigitInput Digit="0" FixedWidth="50" />
+    <controls:DigitControl Digit="0" FixedWidth="50" />
   </Design.PreviewWith>
 
-  <Style Selector="controls|DigitInput">
+  <Style Selector="controls|DigitControl">
     <Style.Resources>
       <converters:BorderThicknessConverter x:Key="BorderThicknessConverter"/>
     </Style.Resources>
