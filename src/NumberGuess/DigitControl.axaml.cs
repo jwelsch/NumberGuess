@@ -1,44 +1,24 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
-using Avalonia.Data.Converters;
 using Avalonia.Media;
 using System;
-using System.Globalization;
 
 namespace NumberGuess;
-
-public class BorderThicknessConverter : IValueConverter
-{
-    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
-    {
-        if (value == null || value is not bool highlight || !highlight)
-        {
-            return new Thickness(1);
-        }
-
-        return new Thickness(3);
-    }
-
-    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
-    {
-        return null;
-    }
-}
 
 public class DigitControl : TemplatedControl
 {
     /// <summary>
     /// Defines the <see cref="Digit"/> property.
     /// </summary>
-    public static readonly StyledProperty<string?> DigitProperty =
-        AvaloniaProperty.Register<DigitControl, string?>(
+    public static readonly StyledProperty<char?> DigitProperty =
+        AvaloniaProperty.Register<DigitControl, char?>(
             nameof(Digit));
 
     /// <summary>
     /// Gets or sets the Digit.
     /// </summary>
-    public string? Digit
+    public char? Digit
     {
         get => GetValue(DigitProperty);
         set => SetValue(DigitProperty, value);
@@ -74,22 +54,6 @@ public class DigitControl : TemplatedControl
     {
         get => GetValue(HighlightBorderProperty);
         set => SetValue(HighlightBorderProperty, value);
-    }
-
-    /// <summary>
-    /// Defines the <see cref="BackgroundColor"/> property.
-    /// </summary>
-    public static readonly StyledProperty<Brush?> BackgroundColorProperty =
-        AvaloniaProperty.Register<DigitControl, Brush?>(
-            nameof(BackgroundColor));
-
-    /// <summary>
-    /// Gets or sets the BackgroundColor.
-    /// </summary>
-    public Brush? BackgroundColor
-    {
-        get => GetValue(BackgroundColorProperty);
-        set => SetValue(BackgroundColorProperty, value);
     }
 
     private SolidColorBrush? _borderBrush;

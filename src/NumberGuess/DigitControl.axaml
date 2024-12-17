@@ -1,18 +1,16 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="using:NumberGuess"
-        xmlns:converters="using:NumberGuess">
+        xmlns:controls="using:NumberGuess">
   <Design.PreviewWith>
-    <controls:DigitControl Digit="0" FixedWidth="50" />
+    <controls:DigitControl Digit="0" FixedWidth="50" HighlightBorder="True" />
   </Design.PreviewWith>
 
   <Style Selector="controls|DigitControl">
-    <Style.Resources>
-      <converters:BorderThicknessConverter x:Key="BorderThicknessConverter"/>
-    </Style.Resources>
+    <Setter Property="Background" Value="{DynamicResource NumberGuessBackground}"/>
+    <Setter Property="Foreground" Value="{DynamicResource NumberGuessForeground}"/>
     <Setter Property="Template">
       <ControlTemplate>
-        <Border x:Name="_textBorder" BorderThickness="2" CornerRadius="10" BorderBrush="{DynamicResource NumberGuessForeground}">
+        <Border x:Name="_textBorder" BorderThickness="2" CornerRadius="10" BorderBrush="{TemplateBinding Foreground}">
           <TextBlock Margin="10" Text="{TemplateBinding Digit}" Width="{TemplateBinding FixedWidth}" TextAlignment="Center" />
         </Border>
       </ControlTemplate>
