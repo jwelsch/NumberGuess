@@ -12,7 +12,7 @@
         Width="800"
         Height="600">
   <Window.Resources>
-    <converters:DigitPlaceHightlightConverter x:Key="DigitPlaceHightlightConverter"/>
+    <converters:StatusToBackgroundConverter x:Key="StatusToBackgroundConverter"/>
   </Window.Resources>
   <DockPanel>
     <DockPanel DockPanel.Dock="Bottom">
@@ -21,13 +21,35 @@
       <Button x:Name="_resetButton" Margin="5,0,0,5" Command="{Binding ResetCommand}">Reset</Button>
     </DockPanel>
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom"  Orientation="Vertical">
-      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,0,5">
-        <controls:DigitControl x:Name="_oneDigitInput" FixedWidth="50" Digit="{Binding DigitOne}" HighlightBorder="{Binding DigitPlace, Converter={StaticResource DigitPlaceHightlightConverter}, ConverterParameter=0}" />
-        <controls:DigitControl x:Name="_twoDigitInput" FixedWidth="50" Digit="{Binding DigitTwo}" HighlightBorder="{Binding DigitPlace, Converter={StaticResource DigitPlaceHightlightConverter}, ConverterParameter=1}" />
-        <controls:DigitControl x:Name="_threeDigitInput" FixedWidth="50" Digit="{Binding DigitThree}" HighlightBorder="{Binding DigitPlace, Converter={StaticResource DigitPlaceHightlightConverter}, ConverterParameter=2}" />
-        <controls:DigitControl x:Name="_fourDigitInput" FixedWidth="50" Digit="{Binding DigitFour}" HighlightBorder="{Binding DigitPlace, Converter={StaticResource DigitPlaceHightlightConverter}, ConverterParameter=3}" />
-      </StackPanel>
-      <Button x:Name="_submitButton" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Width="290" Command="{Binding SubmitCommand}" IsEnabled="{Binding CanSubmit}" IsDefault="True">Submit</Button>
+      <!--<ItemsControl x:Name="_guessedItemsControl" ItemsSource="{Binding GuessedCharacters}">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <StackPanel Orientation="Horizontal" />
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <Border x:Name="_textBorder" BorderBrush="{DynamicResource NumberGuessForeground}" BorderThickness="2" CornerRadius="10">
+              <TextBlock Margin="10" Text="{Binding Char}" Width="50" TextAlignment="Center" />
+            </Border>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>-->
+      <ItemsControl x:Name="_inputItemsControl" ItemsSource="{Binding InputCharacters}">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <StackPanel Orientation="Horizontal" />
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <Border x:Name="_textBorder" BorderBrush="{Binding State, Converter={StaticResource StatusToBackgroundConverter}}" BorderThickness="2" CornerRadius="10">
+              <TextBlock Margin="10" Text="{Binding Char}" Width="50" TextAlignment="Center" />
+            </Border>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+      <Button x:Name="_submitButton" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Width="290" Margin="0,5,0,0" Command="{Binding SubmitCommand}" IsEnabled="{Binding CanSubmit}" IsDefault="True">Submit</Button>
       <TextBlock x:Name="_messageTextBlock" HorizontalAlignment="Center" Text="{Binding MessageText}" Margin="0,5,0,0" />
     </StackPanel>
   </DockPanel>

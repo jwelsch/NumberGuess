@@ -2,14 +2,13 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace NumberGuess
 {
     internal partial class MainWindowViewModel : ViewModelBase
     {
-        private const int DigitCount = 4;
-        private const int AttemptCount = 5;
-
         private readonly IAvaloniaKeyToCharConverter _avaloniaKeyToCharConverter;
         private readonly IDigitKeyDetector _digitKeyDetector;
         private readonly INumberGuessGameTrackerFactory _gameTrackerFactory;
@@ -18,25 +17,22 @@ namespace NumberGuess
         private INumberGuessGameTracker _gameTracker;
 
         [ObservableProperty]
-        private string? _digitOne;
+        private int _digitCount;
 
         [ObservableProperty]
-        private string? _digitTwo;
-
-        [ObservableProperty]
-        private string? _digitThree;
-
-        [ObservableProperty]
-        private string? _digitFour;
-
-        [ObservableProperty]
-        private int _digitPlace;
+        private int _attemptCount;
 
         [ObservableProperty]
         private bool _canSubmit;
 
         [ObservableProperty]
         private string? _messageText;
+
+        [ObservableProperty]
+        private List<List<CharacterViewModel>> _guessedCharacters = new();
+
+        [ObservableProperty]
+        private List<CharacterViewModel> _inputCharacters = new();
 
         public MainWindowViewModel(IAvaloniaKeyToCharConverter avaloniaKeyToCharConverter, IDigitKeyDetector digitKeyDetector, INumberGuessGameTrackerFactory gameTrackerFactory, IAnswerGenerator answerGenerator)
         {
@@ -46,26 +42,42 @@ namespace NumberGuess
             _answerGenerator = answerGenerator;
             _gameTracker = _gameTrackerFactory.Create();
 
-            DigitPlace = -1;
+            DigitCount = 4;
+            AttemptCount = 5;
 
             InitializeGame();
+        }
+
+        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            base.OnPropertyChanged(e);
+
+            if (e.PropertyName == nameof(DigitCount))
+            {
+                InputCharacters.Clear();
+
+                for (var i = 0; i < DigitCount; i++)
+                {
+                    InputCharacters.Add(new CharacterViewModel
+                    {
+                        Char = ' ',
+                        State = CharacterState.Default
+                    });
+                }
+            }
         }
 
         private void InitializeGame()
         {
             try
             {
-                DigitOne = null;
-                DigitTwo = null;
-                DigitThree = null;
-                DigitFour = null;
-                MessageText = null;
-
                 var answer = _answerGenerator.Generate(AnswerCharSet.Digits, DigitCount);
+
                 _gameTracker.Start(answer.ToCharArray(), AttemptCount);
 
-                DigitPlace = _gameTracker.DigitPlace;
+                MessageText = null;
                 CanSubmit = _gameTracker.CanSubmit;
+                InputCharacters[_gameTracker.DigitPlace].State = CharacterState.Input;
 
                 System.Diagnostics.Trace.WriteLine($"Answer: {answer}");
             }
@@ -86,20 +98,30 @@ namespace NumberGuess
             {
                 Submit();
             }
+            else if (key == Key.Back || key == Key.Delete)
+            {
+                ProcessBack();
+            }
         }
 
         private void ProcessDigitKey(Key key)
         {
             try
             {
+                InputCharacters[_gameTracker.DigitPlace].State = CharacterState.Default;
+
                 var c = _avaloniaKeyToCharConverter.GetKeyChar(key);
 
                 SetDigitInput(c.ToString());
 
                 _gameTracker.Input(c);
 
-                DigitPlace = _gameTracker.DigitPlace;
                 CanSubmit = _gameTracker.CanSubmit;
+
+                if (_gameTracker.DigitPlace >= 0 && _gameTracker.DigitPlace < InputCharacters.Count)
+                {
+                    InputCharacters[_gameTracker.DigitPlace].State = CharacterState.Input;
+                }
             }
             catch (Exception ex)
             {
@@ -110,25 +132,47 @@ namespace NumberGuess
 
         private void SetDigitInput(string input)
         {
-            if (_gameTracker.DigitPlace == 0)
+            if (_gameTracker.DigitPlace >= InputCharacters.Count)
             {
-                DigitOne = input;
+                throw new InvalidOperationException($"Game tracker digit place '{_gameTracker.DigitPlace}' is greater than or equal to the character count '{GuessedCharacters.Count}'.");
             }
-            else if (_gameTracker.DigitPlace == 1)
+
+            InputCharacters[_gameTracker.DigitPlace].Char = input[0];
+        }
+
+        private void ProcessBack()
+        {
+            try
             {
-                DigitTwo = input;
+                //System.Diagnostics.Trace.WriteLine($"ProcessBack - _gameTracker.DigitPlace: {_gameTracker.DigitPlace}");
+
+                var index = _gameTracker.DigitPlace >= DigitCount ? DigitCount - 1 : _gameTracker.DigitPlace;
+
+                //System.Diagnostics.Trace.WriteLine($"ProcessBack - index: {index}");
+
+                if (index < 0)
+                {
+                    return;
+                }
+
+                InputCharacters[index].Char = ' ';
+                InputCharacters[index].State = CharacterState.Default;
+
+                _gameTracker.Back();
+                CanSubmit = _gameTracker.CanSubmit;
+
+                System.Diagnostics.Trace.WriteLine($"ProcessBack - _gameTracker.DigitPlace: {_gameTracker.DigitPlace}");
+
+                if (_gameTracker.DigitPlace >= 0 && _gameTracker.DigitPlace < InputCharacters.Count)
+                {
+                    InputCharacters[_gameTracker.DigitPlace].Char = ' ';
+                    InputCharacters[_gameTracker.DigitPlace].State = CharacterState.Input;
+                }
             }
-            else if (_gameTracker.DigitPlace == 2)
+            catch (Exception ex)
             {
-                DigitThree = input;
-            }
-            else if (_gameTracker.DigitPlace == 3)
-            {
-                DigitFour = input;
-            }
-            else
-            {
-                throw new InvalidOperationException($"The game tracker digit place was not an expected value: {_gameTracker.DigitPlace}");
+                MessageText = $"Error while processing back key.\n{ex}";
+                System.Diagnostics.Trace.WriteLine(MessageText);
             }
         }
 
@@ -139,7 +183,6 @@ namespace NumberGuess
             {
                 _gameTracker.Submit();
                 CanSubmit = _gameTracker.CanSubmit;
-                DigitPlace = DigitCount;
 
                 if (_gameTracker.State == NumberGuessGameState.Won)
                 {

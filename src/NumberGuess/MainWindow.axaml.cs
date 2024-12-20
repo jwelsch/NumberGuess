@@ -3,22 +3,70 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Data.Converters;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Media;
+using Avalonia.Styling;
 using System;
 using System.Globalization;
 
 namespace NumberGuess
 {
-    public class DigitPlaceHightlightConverter : IValueConverter
+    public class StatusToBackgroundConverter : IValueConverter
     {
+        private readonly IResourceHost? _resourceHost;
+        private readonly ThemeVariant? _themeVariant;
+        private SolidColorBrush? _defaultBrush;
+        private SolidColorBrush? _inputBrush;
+
+        public StatusToBackgroundConverter(IAppResourceHostProvider appResourceHostProvider)
+        {
+            _resourceHost = appResourceHostProvider.GetResourceHost();
+            _themeVariant = appResourceHostProvider.GetThemeVariant();
+        }
+
+        public StatusToBackgroundConverter()
+        {
+            _resourceHost = App.Current;
+            _themeVariant = App.Current?.ActualThemeVariant;
+        }
+
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            if (value == null || value is not int digitPlace
-                || parameter == null || parameter is not string inputPlace)
+            if (value == null
+                || value is not CharacterState state)
             {
                 return null;
             }
 
-            return digitPlace == int.Parse(inputPlace);
+            if (state == CharacterState.Input)
+            {
+                if (_inputBrush == null)
+                {
+                    if (!(_resourceHost?.TryFindResource("NumberGuessSelection", _themeVariant, out object? resource) ?? false)
+                        || resource == null
+                        || resource is not SolidColorBrush brush)
+                    {
+                        return null;
+                    }
+
+                    _inputBrush = brush;
+                }
+
+                return _inputBrush;
+            }
+
+            if (_defaultBrush == null)
+            {
+                if (!(_resourceHost?.TryFindResource("NumberGuessForeground", _themeVariant, out object? resource) ?? false)
+                    || resource == null
+                    || resource is not SolidColorBrush brush)
+                {
+                    return null;
+                }
+
+                _defaultBrush = brush;
+            }
+
+            return _defaultBrush;
         }
 
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
@@ -40,14 +88,14 @@ namespace NumberGuess
         {
             base.OnApplyTemplate(e);
 
-            _oneDigitInput.HighlightBorder = false;
+            //_oneDigitInput.HighlightBorder = false;
         }
 
         protected override void OnLoaded(RoutedEventArgs e)
         {
             base.OnLoaded(e);
 
-            _oneDigitInput.HighlightBorder = true;
+            //_oneDigitInput.HighlightBorder = true;
         }
 
         private void OnKeyDownHandler(object? sender, KeyEventArgs e)

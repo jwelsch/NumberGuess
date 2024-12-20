@@ -8,10 +8,16 @@
   <Style Selector="controls|AttemptControl">
     <!-- Set Defaults -->
     <Setter Property="Template">
-      <ControlTemplate>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,0,5">
-          <ItemsControl>
-            
+      <ControlTemplate x:DataType="controls:AttemptControlViewModel">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,0,5" x:DataType="controls:AttemptControl">
+          <ItemsControl x:Name="_itemsControl" ItemsSource="{Binding Characters}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <Border x:Name="_textBorder" BorderThickness="2" CornerRadius="10">
+                  <TextBlock Margin="10" Text="{Binding Char}" Width="50" TextAlignment="Center" />
+                </Border>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
           </ItemsControl>
           <!--<controls:DigitControl x:Name="_oneDigitInput" FixedWidth="50" Digit="{Binding DigitOne}" HighlightBorder="{Binding DigitPlace, Converter={StaticResource DigitPlaceHightlightConverter}, ConverterParameter=0}" />
           <controls:DigitControl x:Name="_twoDigitInput" FixedWidth="50" Digit="{Binding DigitTwo}" HighlightBorder="{Binding DigitPlace, Converter={StaticResource DigitPlaceHightlightConverter}, ConverterParameter=1}" />
