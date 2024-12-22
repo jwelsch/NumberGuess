@@ -12,6 +12,15 @@ namespace NumberGuess
         Lost
     }
 
+    public enum DigitInputState
+    {
+        Input,
+        Correct,
+        WrongDigit,
+        WrongPlacement
+    }
+
+
     public record DigitInputResult(DigitInputState State, char? Input = null);
 
     public record AttemptResult(AttemptState State, IReadOnlyList<DigitInputResult> DigitInputResult);
@@ -67,6 +76,8 @@ namespace NumberGuess
         public int DigitPlace => _attemptTracker?.DigitPlace ?? -1;
 
         public IReadOnlyList<AttemptResult> AttemptResults => _attemptResults;
+
+        public int AttemptsRemaining => AttemptCount - _attemptResults.Count;
 
         public void Start(char[] answer, int attemptCount)
         {
@@ -133,7 +144,17 @@ namespace NumberGuess
                 throw new InvalidOperationException($"Expected attempt current state to be {AttemptState.Submit}, but state is {_attemptTracker?.State}.");
             }
 
-            State = CheckAttempt() ? NumberGuessGameState.Won : NumberGuessGameState.Lost;
+            if (CheckAttempt())
+            {
+                State = NumberGuessGameState.Won;
+            }
+            else
+            {
+                if (AttemptsRemaining <= 0)
+                {
+                    State = NumberGuessGameState.Lost;
+                }
+            }
         }
 
         private bool CheckAttempt()

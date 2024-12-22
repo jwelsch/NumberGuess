@@ -3,14 +3,6 @@ using System.Collections.Generic;
 
 namespace NumberGuess
 {
-    public enum DigitInputState
-    {
-        Input,
-        Correct,
-        WrongDigit,
-        WrongPlacement
-    }
-
     public enum AttemptState
     {
         Uninitialized,
@@ -45,11 +37,13 @@ namespace NumberGuess
 
     public class AttemptTracker : IAttemptTracker
     {
+        public const int MaxDigitCount = 10;
+
         private char?[] _inputs = new char?[0];
 
         public AttemptState State { get; private set; }
 
-        public int DigitCount { get; private set; } = 0;
+        public int DigitCount => _inputs.Length;
 
         public int DigitPlace { get; private set; } = 0;
 
@@ -61,8 +55,12 @@ namespace NumberGuess
 
         public void Start(int digitCount)
         {
-            DigitCount = digitCount;
-            _inputs = new char?[DigitCount];
+            if (digitCount <= 0 || digitCount > MaxDigitCount)
+            {
+                throw new ArgumentOutOfRangeException(nameof(digitCount), $"Digit count must be greater than zero and less than or equal to {MaxDigitCount}.");
+            }
+
+            _inputs = new char?[digitCount];
             State = AttemptState.Input;
         }
 
