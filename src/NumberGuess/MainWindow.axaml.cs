@@ -1,11 +1,16 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Controls.Templates;
+using Avalonia.Data;
 using Avalonia.Data.Converters;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Styling;
+using Avalonia.VisualTree;
 using System;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Globalization;
 
 namespace NumberGuess
@@ -89,6 +94,21 @@ namespace NumberGuess
             base.OnApplyTemplate(e);
 
             //_oneDigitInput.HighlightBorder = false;
+
+            if (DataContext == null
+                || DataContext is not MainWindowViewModel model)
+            {
+                return;
+            }
+
+            model.GuessedCharacters.CollectionChanged += GuessedCharacters_CollectionChanged;
+        }
+
+        private void GuessedCharacters_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            var items = _guessedStackItemsControl.Items;
+            var lChildren = _guessedStackItemsControl.GetVisualChildren();
+            var tChildren = _guessedStackItemsControl.GetTemplateChildren();
         }
 
         protected override void OnLoaded(RoutedEventArgs e)

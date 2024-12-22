@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace NumberGuess
@@ -29,7 +30,7 @@ namespace NumberGuess
         private string? _messageText;
 
         [ObservableProperty]
-        private List<List<CharacterViewModel>> _guessedCharacters = new();
+        private ObservableCollection<ObservableCollection<CharacterViewModel>> _guessedCharacters = new();
 
         [ObservableProperty]
         private List<CharacterViewModel> _inputCharacters = new();
@@ -42,10 +43,16 @@ namespace NumberGuess
             _answerGenerator = answerGenerator;
             _gameTracker = _gameTrackerFactory.Create();
 
+            GuessedCharacters.CollectionChanged += GuessedCharacters_CollectionChanged;
+
             DigitCount = 4;
             AttemptCount = 5;
 
             InitializeGame();
+        }
+
+        private void GuessedCharacters_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
         }
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)
@@ -190,7 +197,9 @@ namespace NumberGuess
                 }
                 else if (_gameTracker.State == NumberGuessGameState.Lost)
                 {
-                    MessageText = "You lost!";
+                    //MessageText = "You lost!";
+
+                    MoveInputToGuessed();
                 }
                 else
                 {
@@ -214,6 +223,24 @@ namespace NumberGuess
         public void Reset()
         {
             InitializeGame();
+        }
+
+        private void MoveInputToGuessed()
+        {
+            var guessed = new ObservableCollection<CharacterViewModel>();
+
+            for (var i = 0; i < DigitCount; i++)
+            {
+                guessed.Add(new CharacterViewModel(InputCharacters[i]));
+            }
+
+            GuessedCharacters.Add(guessed);
+
+            for (var i = 0; i < InputCharacters.Count; i++)
+            {
+                InputCharacters[i].Char = ' ';
+                InputCharacters[i].State = CharacterState.Default;
+            }
         }
     }
 }

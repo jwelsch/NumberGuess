@@ -21,20 +21,28 @@
       <Button x:Name="_resetButton" Margin="5,0,0,5" Command="{Binding ResetCommand}">Reset</Button>
     </DockPanel>
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom"  Orientation="Vertical">
-      <!--<ItemsControl x:Name="_guessedItemsControl" ItemsSource="{Binding GuessedCharacters}">
-        <ItemsControl.ItemsPanel>
-          <ItemsPanelTemplate>
-            <StackPanel Orientation="Horizontal" />
-          </ItemsPanelTemplate>
-        </ItemsControl.ItemsPanel>
+
+      <ItemsControl x:Name="_guessedStackItemsControl" ItemsSource="{Binding GuessedCharacters}">
         <ItemsControl.ItemTemplate>
           <DataTemplate>
-            <Border x:Name="_textBorder" BorderBrush="{DynamicResource NumberGuessForeground}" BorderThickness="2" CornerRadius="10">
-              <TextBlock Margin="10" Text="{Binding Char}" Width="50" TextAlignment="Center" />
-            </Border>
+            <ItemsControl ItemsSource="{Binding}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <StackPanel Orientation="Horizontal" Margin="0,0,0,5" />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <Border BorderBrush="{DynamicResource NumberGuessForeground}" BorderThickness="2" CornerRadius="10">
+                    <TextBlock Margin="10" Text="{Binding Char}" Width="50" TextAlignment="Center" />
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
           </DataTemplate>
         </ItemsControl.ItemTemplate>
-      </ItemsControl>-->
+      </ItemsControl>
+
       <ItemsControl x:Name="_inputItemsControl" ItemsSource="{Binding InputCharacters}">
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
@@ -49,6 +57,7 @@
           </DataTemplate>
         </ItemsControl.ItemTemplate>
       </ItemsControl>
+
       <Button x:Name="_submitButton" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Width="290" Margin="0,5,0,0" Command="{Binding SubmitCommand}" IsEnabled="{Binding CanSubmit}" IsDefault="True">Submit</Button>
       <TextBlock x:Name="_messageTextBlock" HorizontalAlignment="Center" Text="{Binding MessageText}" Margin="0,5,0,0" />
     </StackPanel>

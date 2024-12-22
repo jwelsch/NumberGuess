@@ -17,9 +17,16 @@ namespace NumberGuess
         private char? _char;
 
         [ObservableProperty]
-        private bool _highlight;
-
-        [ObservableProperty]
         private CharacterState _state = CharacterState.Default;
+
+        public CharacterViewModel()
+        {
+        }
+
+        public CharacterViewModel(CharacterViewModel model)
+        {
+            Char = model.Char;
+            State = model.State;
+        }
     }
 }
