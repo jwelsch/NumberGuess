@@ -197,8 +197,10 @@ namespace NumberGuess
                 }
                 else if (_gameTracker.State == NumberGuessGameState.Lost)
                 {
-                    //MessageText = "You lost!";
-
+                    MessageText = "You lost!";
+                }
+                else if (_gameTracker.State == NumberGuessGameState.Playing)
+                {
                     MoveInputToGuessed();
                 }
                 else
