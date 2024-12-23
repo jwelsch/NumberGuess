@@ -231,9 +231,15 @@ namespace NumberGuess
         {
             var guessed = new ObservableCollection<CharacterViewModel>();
 
+            var lastAttempt = _gameTracker.AttemptResults[^1];
+
             for (var i = 0; i < DigitCount; i++)
             {
-                guessed.Add(new CharacterViewModel(InputCharacters[i]));
+                guessed.Add(new CharacterViewModel
+                {
+                    Char = lastAttempt.DigitInputResult[i].Input,
+                    State = CharacterViewModel.ConvertFromDigitInputState(lastAttempt.DigitInputResult[i].State)
+                });
             }
 
             GuessedCharacters.Add(guessed);
@@ -241,7 +247,7 @@ namespace NumberGuess
             for (var i = 0; i < InputCharacters.Count; i++)
             {
                 InputCharacters[i].Char = ' ';
-                InputCharacters[i].State = CharacterState.Default;
+                InputCharacters[i].State = i == 0 ? CharacterState.Input : CharacterState.Default;
             }
         }
     }

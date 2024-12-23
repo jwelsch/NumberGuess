@@ -28,5 +28,17 @@ namespace NumberGuess
             Char = model.Char;
             State = model.State;
         }
+
+        public static CharacterState ConvertFromDigitInputState(DigitInputState digitInputState)
+        {
+            return digitInputState switch
+            {
+                DigitInputState.Input => CharacterState.Input,
+                DigitInputState.Correct => CharacterState.Correct,
+                DigitInputState.WrongDigit => CharacterState.WrongCharacter,
+                DigitInputState.WrongPlacement => CharacterState.WrongPlacement,
+                _ => CharacterState.Default
+            };
+        }
     }
 }

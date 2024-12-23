@@ -12,7 +12,8 @@
         Width="800"
         Height="600">
   <Window.Resources>
-    <converters:StatusToBackgroundConverter x:Key="StatusToBackgroundConverter"/>
+    <converters:StateToForegroundConverter x:Key="StateToForegroundConverter"/>
+    <converters:StateToBackgroundConverter x:Key="StateToBackgroundConverter"/>
   </Window.Resources>
   <DockPanel>
     <DockPanel DockPanel.Dock="Bottom">
@@ -33,7 +34,7 @@
               </ItemsControl.ItemsPanel>
               <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                  <Border BorderBrush="{DynamicResource NumberGuessForeground}" BorderThickness="2" CornerRadius="10">
+                  <Border BorderBrush="{DynamicResource NumberGuessForeground}" Background="{Binding State, Converter={StaticResource StateToBackgroundConverter}}" BorderThickness="2" CornerRadius="10">
                     <TextBlock Margin="10" Text="{Binding Char}" Width="50" TextAlignment="Center" />
                   </Border>
                 </DataTemplate>
@@ -51,7 +52,7 @@
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
           <DataTemplate>
-            <Border x:Name="_textBorder" BorderBrush="{Binding State, Converter={StaticResource StatusToBackgroundConverter}}" BorderThickness="2" CornerRadius="10">
+            <Border x:Name="_textBorder" BorderBrush="{Binding State, Converter={StaticResource StateToForegroundConverter}}" BorderThickness="2" CornerRadius="10">
               <TextBlock Margin="10" Text="{Binding Char}" Width="50" TextAlignment="Center" />
             </Border>
           </DataTemplate>
