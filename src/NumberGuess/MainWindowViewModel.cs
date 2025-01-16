@@ -157,11 +157,7 @@ namespace NumberGuess
         {
             try
             {
-                //System.Diagnostics.Trace.WriteLine($"ProcessBack - _gameTracker.DigitPlace: {_gameTracker.DigitPlace}");
-
                 var index = _gameTracker.DigitPlace >= DigitCount ? DigitCount - 1 : _gameTracker.DigitPlace;
-
-                //System.Diagnostics.Trace.WriteLine($"ProcessBack - index: {index}");
 
                 if (index < 0)
                 {
@@ -173,8 +169,6 @@ namespace NumberGuess
 
                 _gameTracker.Back();
                 CanSubmit = _gameTracker.CanSubmit;
-
-                System.Diagnostics.Trace.WriteLine($"ProcessBack - _gameTracker.DigitPlace: {_gameTracker.DigitPlace}");
 
                 if (_gameTracker.DigitPlace >= 0 && _gameTracker.DigitPlace < InputCharacters.Count)
                 {
