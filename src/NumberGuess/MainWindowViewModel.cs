@@ -78,13 +78,19 @@ namespace NumberGuess
         {
             try
             {
+                if (GuessedCharacters.Count > 0)
+                {
+                    GuessedCharacters.Clear();
+                }
+
                 var answer = _answerGenerator.Generate(AnswerCharSet.Digits, DigitCount);
 
                 _gameTracker.Start(answer.ToCharArray(), AttemptCount);
 
                 MessageText = null;
                 CanSubmit = _gameTracker.CanSubmit;
-                InputCharacters[_gameTracker.DigitPlace].State = CharacterState.Input;
+
+                ResetInputCharacters();
 
                 System.Diagnostics.Trace.WriteLine($"Answer: {answer}");
             }
@@ -244,6 +250,11 @@ namespace NumberGuess
 
             GuessedCharacters.Add(guessed);
 
+            ResetInputCharacters();
+        }
+
+        private void ResetInputCharacters()
+        {
             for (var i = 0; i < InputCharacters.Count; i++)
             {
                 InputCharacters[i].Char = ' ';
