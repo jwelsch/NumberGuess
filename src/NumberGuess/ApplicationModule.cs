@@ -14,6 +14,7 @@ namespace NumberGuess
             services.AddTransient<IAttemptTracker, AttemptTracker>();
             services.AddTransient<INumberGuessGameTrackerFactory, NumberGuessGameTrackerFactory>();
             services.AddTransient<IAnswerGenerator, AnswerGenerator>();
+            services.AddSingleton<IAppResourceHostProvider>(sp => new AppResourceHostProvider((NumberGuess.App)(App.Current ?? throw new System.Exception($"App.Current was null."))));
         }
     }
 }

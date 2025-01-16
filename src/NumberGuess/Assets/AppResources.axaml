@@ -1,5 +1,7 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <SolidColorBrush x:Key="NumberGuessDigitWrongPlacement" Color="#f0db41" />
+  <SolidColorBrush x:Key="NumberGuessDigitCorrect" Color="#6579f7" />
   <ResourceDictionary.ThemeDictionaries>
     <ResourceDictionary x:Key="Default">
       <StaticResource x:Key="NumberGuessBackground" ResourceKey="SystemRegionBrush" />
