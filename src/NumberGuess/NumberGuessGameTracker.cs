@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -52,6 +53,8 @@ namespace NumberGuess
         void Back();
 
         void Submit();
+
+        event EventHandler<EventArgs>? GameStateChanged;
     }
 
     public class NumberGuessGameTracker : INumberGuessGameTracker
@@ -61,7 +64,21 @@ namespace NumberGuess
         private AttemptTracker? _attemptTracker;
         private List<AttemptResult> _attemptResults = new();
 
-        public NumberGuessGameState State { get; private set; }
+        public event EventHandler<EventArgs>? GameStateChanged;
+
+        private NumberGuessGameState _state;
+        public NumberGuessGameState State
+        {
+            get => _state;
+            private set
+            {
+                if (_state != value)
+                {
+                    _state = value;
+                    GameStateChanged?.Invoke(this, EventArgs.Empty);
+                }
+            }
+        }
 
         public IReadOnlyList<char> Answer { get; private set; } = new char[0];
 

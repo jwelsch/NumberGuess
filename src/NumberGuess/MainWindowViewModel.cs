@@ -35,6 +35,9 @@ namespace NumberGuess
         [ObservableProperty]
         private List<CharacterViewModel> _inputCharacters = new();
 
+        [ObservableProperty]
+        private NumberGuessGameState _gameState = NumberGuessGameState.Uninitialized;
+
         public MainWindowViewModel(IAvaloniaKeyToCharConverter avaloniaKeyToCharConverter, IDigitKeyDetector digitKeyDetector, INumberGuessGameTrackerFactory gameTrackerFactory, IAnswerGenerator answerGenerator)
         {
             _avaloniaKeyToCharConverter = avaloniaKeyToCharConverter;
@@ -42,6 +45,7 @@ namespace NumberGuess
             _gameTrackerFactory = gameTrackerFactory;
             _answerGenerator = answerGenerator;
             _gameTracker = _gameTrackerFactory.Create();
+            _gameTracker.GameStateChanged += _gameTracker_GameStateChanged;
 
             GuessedCharacters.CollectionChanged += GuessedCharacters_CollectionChanged;
 
@@ -49,6 +53,11 @@ namespace NumberGuess
             AttemptCount = 5;
 
             InitializeGame();
+        }
+
+        private void _gameTracker_GameStateChanged(object? sender, EventArgs e)
+        {
+            GameState = _gameTracker.State;
         }
 
         private void GuessedCharacters_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -189,6 +198,11 @@ namespace NumberGuess
 
                 if (_gameTracker.State == NumberGuessGameState.Won)
                 {
+                    for (var i = 0; i < InputCharacters.Count; i++)
+                    {
+                        InputCharacters[i].State = CharacterState.Correct;
+                    }
+
                     MessageText = "You won!";
                 }
                 else if (_gameTracker.State == NumberGuessGameState.Lost)
