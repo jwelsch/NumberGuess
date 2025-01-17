@@ -107,10 +107,6 @@ namespace NumberGuess
             {
                 ProcessDigitKey(key);
             }
-            else if (key == Key.Enter && _gameTracker.CanSubmit)
-            {
-                Submit();
-            }
             else if (key == Key.Back || key == Key.Delete)
             {
                 ProcessBack();

@@ -18,8 +18,8 @@
   <DockPanel>
     <DockPanel DockPanel.Dock="Bottom">
       <Rectangle DockPanel.Dock="Top" Height="1" Fill="{DynamicResource NumberGuessBorderMedium}" Margin="0,0,0,5"/>
-      <Button x:Name="_statsButton" Margin="5,0,0,5" Command="{Binding ShowStatsCommand}">Stats</Button>
-      <Button x:Name="_resetButton" Margin="5,0,0,5" Command="{Binding ResetCommand}">Reset</Button>
+      <Button x:Name="_statsButton" Margin="5,0,0,5" Command="{Binding ShowStatsCommand}" Focusable="False">Stats</Button>
+      <Button x:Name="_resetButton" Margin="5,0,0,5" Command="{Binding ResetCommand}" Focusable="False">Reset</Button>
     </DockPanel>
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom"  Orientation="Vertical">
 
@@ -59,7 +59,7 @@
         </ItemsControl.ItemTemplate>
       </ItemsControl>
 
-      <Button x:Name="_submitButton" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Width="290" Margin="0,5,0,0" Command="{Binding SubmitCommand}" IsEnabled="{Binding CanSubmit}" IsDefault="True">Submit</Button>
+      <Button x:Name="_submitButton" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Width="290" Margin="0,5,0,0" Command="{Binding SubmitCommand}" IsEnabled="{Binding CanSubmit}" IsDefault="True" Focusable="True">Submit</Button>
       <TextBlock x:Name="_messageTextBlock" HorizontalAlignment="Center" Text="{Binding MessageText}" Margin="0,5,0,0" />
     </StackPanel>
   </DockPanel>
