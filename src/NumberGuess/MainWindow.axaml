@@ -19,7 +19,7 @@
   <DockPanel>
     <DockPanel DockPanel.Dock="Bottom">
       <Rectangle DockPanel.Dock="Top" Height="1" Fill="{DynamicResource NumberGuessBorderMedium}" Margin="0,0,0,5"/>
-      <Button x:Name="_statsButton" Margin="5,0,0,5" Command="{Binding ShowStatsCommand}" Focusable="False">Stats</Button>
+      <Button x:Name="_statsButton" Margin="5,0,0,5" Command="{Binding ShowStatsCommand}" Focusable="False" IsVisible="False">Stats</Button>
       <Button x:Name="_resetButton" Margin="5,0,0,5" Command="{Binding ResetCommand}" Focusable="False">Reset</Button>
     </DockPanel>
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom"  Orientation="Vertical">
