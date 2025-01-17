@@ -87,9 +87,9 @@ namespace NumberGuess
 
                 _gameTracker.Start(answer.ToCharArray(), AttemptCount);
 
-                MessageText = null;
                 CanSubmit = _gameTracker.CanSubmit;
 
+                RefreshMessageText();
                 ResetInputCharacters();
 
                 System.Diagnostics.Trace.WriteLine($"Answer: {answer}");
@@ -198,6 +198,7 @@ namespace NumberGuess
                 else if (_gameTracker.State == NumberGuessGameState.Playing)
                 {
                     MoveInputToGuessed();
+                    RefreshMessageText();
                 }
                 else
                 {
@@ -250,6 +251,11 @@ namespace NumberGuess
                 InputCharacters[i].Char = ' ';
                 InputCharacters[i].State = i == 0 ? CharacterState.Input : CharacterState.Default;
             }
+        }
+
+        private void RefreshMessageText()
+        {
+            MessageText = $"{AttemptCount - GuessedCharacters.Count} guesses remaining";
         }
     }
 }
