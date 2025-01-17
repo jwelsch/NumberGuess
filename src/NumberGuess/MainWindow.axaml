@@ -34,7 +34,7 @@
               </ItemsControl.ItemsPanel>
               <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                  <Border BorderBrush="{DynamicResource NumberGuessForeground}" Background="{Binding State, Converter={StaticResource StateToBackgroundConverter}}" BorderThickness="2" CornerRadius="10">
+                  <Border BorderBrush="{DynamicResource NumberGuessForeground}" Background="{Binding State, Converter={StaticResource StateToBackgroundConverter}}" BorderThickness="2" CornerRadius="10" Margin="1">
                     <TextBlock Margin="10" Text="{Binding Char}" Width="50" TextAlignment="Center" />
                   </Border>
                 </DataTemplate>
@@ -52,7 +52,7 @@
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
           <DataTemplate>
-            <Border x:Name="_textBorder" BorderBrush="{Binding State, Converter={StaticResource StateToForegroundConverter}}" BorderThickness="2" CornerRadius="10">
+            <Border x:Name="_textBorder" BorderBrush="{Binding State, Converter={StaticResource StateToForegroundConverter}}" BorderThickness="2" CornerRadius="10" Margin="1">
               <TextBlock Margin="10" Text="{Binding Char}" Width="50" TextAlignment="Center" />
             </Border>
           </DataTemplate>
@@ -60,7 +60,8 @@
       </ItemsControl>
 
       <Button x:Name="_submitButton" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Width="290" Margin="0,5,0,0" Command="{Binding SubmitCommand}" IsEnabled="{Binding CanSubmit}" IsDefault="True" Focusable="True">Submit</Button>
-      <TextBlock x:Name="_messageTextBlock" HorizontalAlignment="Center" Text="{Binding MessageText}" Margin="0,5,0,0" />
+      <TextBlock x:Name="_messageTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding MessageText}" Height="40" Margin="0,5,0,5" FontSize="30" />
+      
     </StackPanel>
   </DockPanel>
 </Window>
